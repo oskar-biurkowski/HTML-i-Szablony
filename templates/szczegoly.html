@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block tytul %}{{ p.nazwa }}{% endblock %}
+
+{% block tresc %}
+    <h1>{{ p.nazwa }}</h1>
+    <p><b>ID:</b> {{ p.id }}</p>
+    <p><b>Cena:</b> {{ p.cena }} zł</p>
+    <p><b>Kategoria:</b> {{ p.kategoria }}</p>
+    <p><b>Dostępność:</b> {% if p.dostepny %}Dostępny{% else %}Brak{% endif %}</p>
+    <a href="{{ url_for('lista') }}">Powrót</a>
+{% endblock %}
