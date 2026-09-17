@@ -1,0 +1,1 @@
+from flask_sqlalchemy import SQLAlchemyfrom datetime import datetimedb = SQLAlchemy()class Produkt(db.Model):    id = db.Column(db.Integer, primary_key=True)    nazwa = db.Column(db.String(100), nullable=False)    cena = db.Column(db.Float, nullable=False)    dostepny = db.Column(db.Boolean, default=True)    data_dodania = db.Column(db.DateTime, default=datetime.utcnow)

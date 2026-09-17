@@ -1,15 +1,21 @@
 from flask import Flask, render_template, request, url_for, redirect, abort
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///sklep.db"
+db = SQLAlchemy(app)
 
 # Baza danych w słownikach / liście słowników (według sekcji 5.3 i 6.3 z obu lekcji)
-PRODUKTY = [
-    {"id": 1, "nazwa": "Laptop", "cena": 2999, "kategoria": "Elektronika", "dostepny": True},
-    {"id": 2, "nazwa": "Mysz", "cena": 49, "kategoria": "Akcesoria", "dostepny": False},
-    {"id": 3, "nazwa": "Klawiatura", "cena": 199, "kategoria": "Akcesoria", "dostepny": True},
-    {"id": 4, "nazwa": "Monitor", "cena": 899, "kategoria": "Elektronika", "dostepny": True},
-    {"id": 5, "nazwa": "Słuchawki", "cena": 150, "kategoria": "Akcesoria", "dostepny": False},
-]
+class Produkt(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nazwa = db.Column(db.String(100), nullable=False)
+    cena = db.Column(db.Float, nullable=False)
+    dostepny = db.Column(db.Boolean, default=True)
+    data_dodania = db.Column(db.DateTime, default=datetime.utcnow)
+    def __repr__(self):
+        return f"<Produkt {self.nazwa}>"
+with app.app_context():
+    db.create_all()
 
 
 # ==========================================
